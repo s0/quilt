@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {graphql} from '@shopify/react-apollo';
+import {graphql} from 'react-apollo';
 
 import {mount} from 'enzyme';
 import {readFileSync} from 'fs';
