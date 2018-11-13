@@ -74,6 +74,7 @@ The provided `i18n` object exposes many useful methods for internationalizing yo
 - `formatCurrency()`: formats a number as a currency according ot the locale. Convenience function that simply _auto-assigns_ the `as` option to `currency` and calls `formatNumber()`.
 - `formatPercentage()`: formats a number as a percentage according ot the locale. Convenience function that simply _auto-assigns_ the `as` option to `percent` and calls `formatNumber()`.
 - `formatDate()`: formats a date according to the locale. The `defaultTimezone` value supplied to the i18n `Provider` component will be used when no custom `timezone` is provided. Assign the `style` option to a `DateStyle` value to use common formatting options.
+  - `DateStyle.ExtraLong`: e.g., `Thursday, December 20, 2012 00:00`
   - `DateStyle.Long`: e.g., `Thursday, December 20, 2012`
   - `DateStyle.Short`: e.g., `Dec 20, 2012`
   - `DateStyle.Humanize`: e.g., `December 20, 2012`, `Today`, or `Yesterday`

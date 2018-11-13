@@ -213,9 +213,7 @@ export default class I18n {
   }
 
   private humanizeDate(date: Date, options?: Intl.DateTimeFormatOptions) {
-    const today = new Date();
-
-    if (isSameDate(today, date)) {
+    if (isToday(date)) {
       return this.translate('today');
     } else if (isYesterday(date)) {
       return this.translate('yesterday');
@@ -250,7 +248,12 @@ function isSameDate(source: Date, target: Date) {
   );
 }
 
-function isYesterday(date: Date) {
+export function isToday(date: Date) {
+  const today = new Date();
+  return isSameDate(today, date);
+}
+
+export function isYesterday(date: Date) {
   const yesterday = new Date();
   yesterday.setDate(yesterday.getDate() - 1);
 

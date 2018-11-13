@@ -1,4 +1,5 @@
 export enum DateStyle {
+  ExtraLong = 'ExtraLong',
   Long = 'Long',
   Short = 'Short',
   Humanize = 'Humanize',
@@ -6,6 +7,13 @@ export enum DateStyle {
 }
 
 export const dateStyle = {
+  [DateStyle.ExtraLong]: {
+    month: 'long',
+    day: '2-digit',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  },
   [DateStyle.Long]: {
     weekday: 'long',
     month: 'long',
