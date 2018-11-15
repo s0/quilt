@@ -174,9 +174,14 @@ export default class I18n {
     const {style = undefined, ...formatOptions} = options || {};
 
     if (style) {
-      return style === DateStyle.Humanize
-        ? this.humanizeDate(date, formatOptions)
-        : this.formatDate(date, {...formatOptions, ...dateStyle[style]});
+      if (style === DateStyle.HumanizeWithTime) {
+        return this.humanizeDateWithTime(date, formatOptions);
+      }
+      if (style === DateStyle.Humanize) {
+        return this.humanizeDate(date, formatOptions);
+      }
+
+      return this.formatDate(date, {...formatOptions, ...dateStyle[style]});
     }
 
     return new Intl.DateTimeFormat(locale, {
@@ -225,6 +230,37 @@ export default class I18n {
       });
     }
   }
+
+  private humanizeDateWithTime(
+    date: Date,
+    options?: Intl.DateTimeFormatOptions,
+  ) {
+    if (isToday(date)) {
+      if (lessThanOneMinute(date)) {
+        return this.translate('lessThanOneMinuteAgo', {
+          seconds: getDateDiff(TimeUnit.Second, date),
+        });
+      }
+      if (lessThanOneHour(date)) {
+        return this.translate('lessThanOneHourAgo', {
+          minutes: getDateDiff(TimeUnit.Minute, date),
+        });
+      }
+      if (lessThanOneDay(date)) {
+        return this.translate('lessThanOneDayAgo', {
+          hours: getDateDiff(TimeUnit.Hour, date),
+        });
+      }
+      return this.translate('today');
+    } else if (isYesterday(date)) {
+      return this.translate('yesterday');
+    } else {
+      return this.formatDate(date, {
+        ...options,
+        ...dateStyle[DateStyle.HumanizeWithTime],
+      });
+    }
+  }
 }
 
 function isTranslateOptions(
@@ -234,4 +270,29 @@ function isTranslateOptions(
     | ComplexReplacementDictionary,
 ): object is TranslateOptions {
   return 'scope' in object;
+}
+
+enum TimeUnit {
+  Second = 1000,
+  Minute = Second * 60,
+  Hour = Minute * 60,
+  Day = Hour * 24,
+  Week = Day * 7,
+  Year = Day * 365,
+}
+
+function lessThanOneMinute(date: Date, today = new Date()) {
+  return today.getTime() - date.getTime() < TimeUnit.Minute;
+}
+
+function lessThanOneHour(date: Date, today = new Date()) {
+  return today.getTime() - date.getTime() < TimeUnit.Hour;
+}
+
+function lessThanOneDay(date: Date, today = new Date()) {
+  return today.getTime() - date.getTime() < TimeUnit.Day;
+}
+
+function getDateDiff(resolution: TimeUnit, date: Date, today = new Date()) {
+  return Math.floor((today.getTime() - date.getTime()) / resolution);
 }

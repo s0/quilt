@@ -1,19 +1,12 @@
 export enum DateStyle {
-  LongWithTime = 'LongWithTime',
   Long = 'Long',
   Short = 'Short',
   Humanize = 'Humanize',
+  HumanizeWithTime = 'HumanizeWithTime',
   Time = 'Time',
 }
 
 export const dateStyle = {
-  [DateStyle.LongWithTime]: {
-    month: 'long',
-    day: '2-digit',
-    year: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
-  },
   [DateStyle.Long]: {
     weekday: 'long',
     month: 'long',
@@ -29,6 +22,13 @@ export const dateStyle = {
     month: 'long',
     day: '2-digit',
     year: 'numeric',
+  },
+  [DateStyle.HumanizeWithTime]: {
+    month: 'long',
+    day: '2-digit',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
   },
   [DateStyle.Time]: {
     hour: '2-digit',
