@@ -1,5 +1,5 @@
 export enum DateStyle {
-  ExtraLong = 'ExtraLong',
+  LongWithTime = 'LongWithTime',
   Long = 'Long',
   Short = 'Short',
   Humanize = 'Humanize',
@@ -7,7 +7,7 @@ export enum DateStyle {
 }
 
 export const dateStyle = {
-  [DateStyle.ExtraLong]: {
+  [DateStyle.LongWithTime]: {
     month: 'long',
     day: '2-digit',
     year: 'numeric',

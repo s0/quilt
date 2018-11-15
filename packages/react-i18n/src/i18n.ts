@@ -1,4 +1,5 @@
 import {languageFromLocale, regionFromLocale} from '@shopify/i18n';
+import {isToday, isYesterday} from '@shopify/javascript-utilities/dates';
 import {memoize, autobind} from '@shopify/javascript-utilities/decorators';
 import {
   I18nDetails,
@@ -233,29 +234,4 @@ function isTranslateOptions(
     | ComplexReplacementDictionary,
 ): object is TranslateOptions {
   return 'scope' in object;
-}
-
-function isSameMonthAndYear(source: Date, target: Date) {
-  return (
-    source.getFullYear() === target.getFullYear() &&
-    source.getMonth() === target.getMonth()
-  );
-}
-
-function isSameDate(source: Date, target: Date) {
-  return (
-    isSameMonthAndYear(source, target) && source.getDate() === target.getDate()
-  );
-}
-
-export function isToday(date: Date) {
-  const today = new Date();
-  return isSameDate(today, date);
-}
-
-export function isYesterday(date: Date) {
-  const yesterday = new Date();
-  yesterday.setDate(yesterday.getDate() - 1);
-
-  return isSameDate(yesterday, date);
 }

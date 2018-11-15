@@ -420,14 +420,14 @@ describe('I18n', () => {
       expect(i18n.formatDate(date, {timeZone: timezone})).toBe(expected);
     });
 
-    it('formats a date using DateStyle.ExtraLong', () => {
+    it('formats a date using DateStyle.LongWithTime', () => {
       const date = new Date('2012-12-20T00:00:00-00:00');
       const i18n = new I18n(defaultTranslations, {
         ...defaultDetails,
         timezone,
       });
 
-      expect(i18n.formatDate(date, {style: DateStyle.ExtraLong})).toBe(
+      expect(i18n.formatDate(date, {style: DateStyle.LongWithTime})).toBe(
         'December 20, 2012, 11:00 AM',
       );
     });
