@@ -236,17 +236,17 @@ export default class I18n {
     options?: Intl.DateTimeFormatOptions,
   ) {
     if (isToday(date)) {
-      if (lessThanOneMinute(date)) {
+      if (isLessThanOneMinuteAgo(date)) {
         return this.translate('lessThanOneMinuteAgo', {
           seconds: getDateDiff(TimeUnit.Second, date),
         });
       }
-      if (lessThanOneHour(date)) {
+      if (isLessThanOneHourAgo(date)) {
         return this.translate('lessThanOneHourAgo', {
           minutes: getDateDiff(TimeUnit.Minute, date),
         });
       }
-      if (lessThanOneDay(date)) {
+      if (isLessThanOneDayAgo(date)) {
         return this.translate('lessThanOneDayAgo', {
           hours: getDateDiff(TimeUnit.Hour, date),
         });
@@ -281,15 +281,15 @@ enum TimeUnit {
   Year = Day * 365,
 }
 
-function lessThanOneMinute(date: Date, today = new Date()) {
+function isLessThanOneMinuteAgo(date: Date, today = new Date()) {
   return today.getTime() - date.getTime() < TimeUnit.Minute;
 }
 
-function lessThanOneHour(date: Date, today = new Date()) {
+function isLessThanOneHourAgo(date: Date, today = new Date()) {
   return today.getTime() - date.getTime() < TimeUnit.Hour;
 }
 
-function lessThanOneDay(date: Date, today = new Date()) {
+function isLessThanOneDayAgo(date: Date, today = new Date()) {
   return today.getTime() - date.getTime() < TimeUnit.Day;
 }
 
