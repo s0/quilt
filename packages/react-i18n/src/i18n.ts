@@ -231,33 +231,75 @@ export default class I18n {
     }
   }
 
+  /**
+   * Intended to follow the Polaris guidelines
+   *
+   * @see https://polaris.shopify.com/content/grammar-and-mechanics#section-dates-numbers-and-addresses
+   */
   private humanizeDateWithTime(
     date: Date,
     options?: Intl.DateTimeFormatOptions,
   ) {
     if (isToday(date)) {
       if (isLessThanOneMinuteAgo(date)) {
-        return this.translate('lessThanOneMinuteAgo', {
-          seconds: getDateDiff(TimeUnit.Second, date),
-        });
+        // Just now
+        return this.translate('lessThanOneMinuteAgo');
       }
       if (isLessThanOneHourAgo(date)) {
+        // m minutes ago
         return this.translate('lessThanOneHourAgo', {
           minutes: getDateDiff(TimeUnit.Minute, date),
         });
       }
       if (isLessThanOneDayAgo(date)) {
-        return this.translate('lessThanOneDayAgo', {
-          hours: getDateDiff(TimeUnit.Hour, date),
+        // hh:mm AM
+        return this.formatDate(date, {
+          ...options,
+          ...dateStyle[DateStyle.Time],
         });
       }
+      // Today
       return this.translate('today');
     } else if (isYesterday(date)) {
-      return this.translate('yesterday');
+      // Yesterday at hh:mm AM
+      return this.translate('yesterdayAt', {
+        time: this.formatDate(date, {
+          ...options,
+          ...dateStyle[DateStyle.Time],
+        }),
+      });
+    } else if (isLessThanOneWeekAgo(date)) {
+      // Weekday at hh:mm AM
+      return this.translate('dayOfWeekAt', {
+        dayOfWeek: this.formatDate(date, {
+          ...options,
+          weekday: 'long',
+        }),
+        time: this.formatDate(date, {
+          ...options,
+          ...dateStyle[DateStyle.Time],
+        }),
+      });
+    } else if (isLessThanOneYearAgo(date)) {
+      // MMM D at hh:mm AM
+      return this.translate('monthAndDayAt', {
+        date: this.formatDate(date, {
+          ...options,
+          month: 'short',
+          day: 'numeric',
+        }),
+        time: this.formatDate(date, {
+          ...options,
+          ...dateStyle[DateStyle.Time],
+        }),
+      });
     } else {
+      // MMM D, YYYY
       return this.formatDate(date, {
         ...options,
-        ...dateStyle[DateStyle.HumanizeWithTime],
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric',
       });
     }
   }
@@ -291,6 +333,14 @@ function isLessThanOneHourAgo(date: Date, today = new Date()) {
 
 function isLessThanOneDayAgo(date: Date, today = new Date()) {
   return today.getTime() - date.getTime() < TimeUnit.Day;
+}
+
+function isLessThanOneWeekAgo(date: Date, today = new Date()) {
+  return today.getTime() - date.getTime() < TimeUnit.Week;
+}
+
+function isLessThanOneYearAgo(date: Date, today = new Date()) {
+  return today.getTime() - date.getTime() < TimeUnit.Year;
 }
 
 function getDateDiff(resolution: TimeUnit, date: Date, today = new Date()) {

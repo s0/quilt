@@ -500,7 +500,7 @@ describe('I18n', () => {
       });
 
       expect(i18n.formatDate(date, {style: DateStyle.HumanizeWithTime})).toBe(
-        'December 20, 2012, 11:00 AM',
+        'Dec 20, 2012',
       );
     });
 
@@ -513,7 +513,7 @@ describe('I18n', () => {
           style: DateStyle.HumanizeWithTime,
           timeZone: timezone,
         }),
-      ).toBe('December 20, 2012, 11:00 AM');
+      ).toBe('Dec 20, 2012');
     });
 
     it('formats less than one minute ago using DateStyle.HumanizeWithTime', () => {
@@ -578,6 +578,40 @@ describe('I18n', () => {
       expect(i18n.formatDate(today, {style: DateStyle.HumanizeWithTime})).toBe(
         i18n.translate('today'),
       );
+    });
+
+    it('formats less than one week ago using DateStyle.HumanizeWithTime', () => {
+      const today = new Date('2012-12-20T00:00:00-00:00');
+      const lessThanOneWeekAgo = new Date(today.getTime());
+      lessThanOneWeekAgo.setDate(-5);
+      clock.mock(today);
+      const i18n = new I18n(defaultTranslations, {
+        ...defaultDetails,
+        timezone,
+      });
+
+      expect(
+        i18n.formatDate(lessThanOneWeekAgo, {
+          style: DateStyle.HumanizeWithTime,
+        }),
+      ).toBe(i18n.translate('dayOfWeekAt'));
+    });
+
+    it('formats less than one year ago using DateStyle.HumanizeWithTime', () => {
+      const today = new Date('2012-12-20T00:00:00-00:00');
+      const lessThanOneYearAgo = new Date(today.getTime());
+      lessThanOneYearAgo.setMonth(1);
+      clock.mock(today);
+      const i18n = new I18n(defaultTranslations, {
+        ...defaultDetails,
+        timezone,
+      });
+
+      expect(
+        i18n.formatDate(lessThanOneYearAgo, {
+          style: DateStyle.HumanizeWithTime,
+        }),
+      ).toBe(i18n.translate('monthAndDayAt'));
     });
 
     it('formats yesterday using DateStyle.HumanizeWithTime', () => {
