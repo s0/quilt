@@ -23,7 +23,10 @@ describe('CreateEnableCookiesRedirect', () => {
 
     enableCookiesRedirect(ctx);
 
-    expect(ctx.cookies.set).toBeCalledWith('shopify.granted_storage_access', '1');
+    expect(ctx.cookies.set).toBeCalledWith(
+      'shopify.granted_storage_access',
+      '1',
+    );
   });
 
   it('sets up and calls the top level redirect', () => {
