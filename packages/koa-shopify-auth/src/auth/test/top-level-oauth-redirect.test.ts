@@ -23,7 +23,7 @@ describe('CreateTopLevelOAuthRedirect', () => {
 
     topLevelOAuthRedirect(ctx);
 
-    expect(ctx.cookies.set).toBeCalledWith('shopifyTopLevelOAuth', '1');
+    expect(ctx.cookies.set).toBeCalledWith('shopify.top_level_oauth', '1');
   });
 
   it('sets up and calls the top level redirect', () => {
