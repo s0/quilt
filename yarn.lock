@@ -156,6 +156,16 @@
     lodash "^4.17.4"
     lodash-decorators "^4.3.5"
 
+"@shopify/javascript-utilities@^2.3.0":
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/@shopify/javascript-utilities/-/javascript-utilities-2.3.0.tgz#11faaad9f4cdf8b3bc3d4f6e6b0d6b0bd9b3a8fb"
+  integrity sha512-4R25YB+XseiPVtK6wr/GaRiWV6fJmdEsqfqG4pMLuwWFQ42co3fOg/p1IdAJYw2bvQ6L4Kv0LL1QRQd79LLc0w==
+  dependencies:
+    "@types/lodash" "^4.14.65"
+    "@types/react" "^16.0.2"
+    lodash "^4.17.4"
+    lodash-decorators "^4.3.5"
+
 "@shopify/react-apollo@^2.0.7":
   version "2.0.7"
   resolved "https://registry.yarnpkg.com/@shopify/react-apollo/-/react-apollo-2.0.7.tgz#24063768881467c721c30b8d00ed5401da37fece"
