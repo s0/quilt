@@ -14,10 +14,12 @@ export interface TemplateData {
 }
 
 export default function itpTemplate(ctx: Context, data: TemplateData) {
-  const footerMarkup = data.footer ? `
+  const footerMarkup = data.footer
+    ? `
 <div class="Polaris-Card__Section Polaris-Card__Section--subdued">
   <p>${data.footer}</p>
-</div>` : '';
+</div>`
+    : '';
 
   return `<!DOCTYPE html>
 <html lang="en">
