@@ -55,8 +55,5 @@ function defaultMatcher(): MediaQueryList {
 }
 
 export function mediaQueryList(values: Partial<MediaQueryList>) {
-  return {
-    ...defaultMatcher(),
-    ...values,
-  };
+  return Object.assign({}, defaultMatcher(), values);
 }
