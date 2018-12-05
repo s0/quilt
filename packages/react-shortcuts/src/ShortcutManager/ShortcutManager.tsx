@@ -61,21 +61,19 @@ export default class ShortcutManager {
     }
   };
 
-  private allModifiersAreHeld = (heldKeys: HeldKey, event: KeyboardEvent) => {
-    // eslint-disable-next-line no-warning-comments
-    // TODO: TypeScript complains that `keyGroupIsHeld(heldKeys)`
-    // could still contain `ModifierKey[]`, which is incorrect...
-    // Until this can be resolved, we need to set type to `any` instead of `ModiferKey[]`
-    function keyGroupIsHeld(keyGroup: any) {
+  private allModifiersAreHeld(heldKeys: HeldKey, event: KeyboardEvent) {
+    function hasKeyGroups(groups: HeldKey): groups is HeldKey {
+      return groups.every(key => Array.isArray(key));
+    }
+
+    function keyGroupIsHeld(keyGroup: ModifierKey[]) {
       return keyGroup.every((key: ModifierKey) => event.getModifierState(key));
     }
 
-    const hasKeyGroups = heldKeys.every(key => Array.isArray(key));
-
-    return hasKeyGroups
+    return hasKeyGroups(heldKeys)
       ? heldKeys.some(keyGroupIsHeld)
       : keyGroupIsHeld(heldKeys);
-  };
+  }
 
   private updateMatchingShortcuts(event: KeyboardEvent) {
     const shortcuts =
